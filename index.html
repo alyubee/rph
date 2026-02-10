@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>RPH – Rupiah App</title>
+
+<link rel="stylesheet" href="style.css">
+
+<!-- Firebase -->
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-database-compat.js"></script>
+
+<!-- ADS -->
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"
+ data-ad-client="ca-pub-XXXXXXX"
+ crossorigin="anonymous"></script>
+</head>
+
+<body>
+<div class="app">
+  <h2>💰 RPH App</h2>
+
+  <button id="loginBtn">Login Google</button>
+
+  <div id="user" class="hidden">
+    <p id="email"></p>
+    <h3>Saldo: Rp <span id="saldo">0</span></h3>
+
+    <button onclick="addSaldo()">🎯 Task</button>
+    <button onclick="withdraw()">💸 Withdraw</button>
+
+    <!-- ADS SLOT -->
+    <ins class="adsbygoogle"
+      style="display:block;margin:10px 0"
+      data-ad-client="ca-pub-XXXXXXX"
+      data-ad-slot="1234567890"
+      data-ad-format="auto"></ins>
+    <script>(adsbygoogle=window.adsbygoogle||[]).push({});</script>
+
+    <button onclick="logout()">Logout</button>
+  </div>
+</div>
+
+<script src="app.js"></script>
+</body>
+</html>
