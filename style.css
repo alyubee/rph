@@ -1,6 +1,7 @@
 body{
+  margin:0;
   background:#f2f2f2;
-  font-family:Arial;
+  font-family:Arial, sans-serif;
   display:flex;
   justify-content:center;
   align-items:center;
@@ -11,8 +12,9 @@ body{
   padding:20px;
   width:100%;
   max-width:360px;
-  border-radius:12px;
+  border-radius:14px;
   text-align:center;
+  box-shadow:0 4px 10px rgba(0,0,0,.1);
 }
 button{
   width:100%;
@@ -22,5 +24,7 @@ button{
   border-radius:8px;
   background:#4CAF50;
   color:#fff;
+  font-size:15px;
 }
+button:active{opacity:.8}
 .hidden{display:none}
