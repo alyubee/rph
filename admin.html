@@ -4,34 +4,52 @@
 <title>Admin WD</title>
 <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-database-compat.js"></s<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Admin RPH</title>
+
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-database-compat.js"></script>
 </head>
+
 <body>
 <h3>Admin Withdraw</h3>
 <div id="list"></div>
 
 <script>
-firebase.initializeApp({/* SAMA CONFIG */});
+firebase.initializeApp({
+  apiKey:"ISI",
+  authDomain:"ISI",
+  databaseURL:"ISI",
+  projectId:"ISI",
+  appId:"ISI"
+});
+
 const ADMIN="admin@gmail.com";
 const auth=firebase.auth();
 const db=firebase.database();
 
 auth.onAuthStateChanged(u=>{
-  if(!u||u.email!==ADMIN)return alert("Bukan admin");
-  db.ref("withdraws").on("value",s=>{
+  if(!u || u.email!==ADMIN){
+    alert("Bukan admin");
+    return;
+  }
+  db.ref("withdraws").on("value", s=>{
     let h="";
-    for(let i in s.val()){
-      let d=s.val()[i];
-      h+=`${d.email} Rp${d.amount}
-      <button onclick="ok('${i}','${d.uid}',${d.amount})">OK</button><br>`;
+    const d=s.val()||{};
+    for(let i in d){
+      h+=`${d[i].email} | Rp${d[i].amount}
+      <button onclick="ok('${i}','${d[i].uid}',${d[i].amount})">OK</button><br>`;
     }
-    list.innerHTML=h;
+    document.getElementById("list").innerHTML=h;
   });
 });
 
-function ok(id,uid,amt){
-  db.ref("users/"+uid+"/saldo")
-    .transaction(v=>(v||0)-amt);
+function ok(id,uid,a){
+  db.ref("users/"+uid+"/saldo").transaction(v=>(v||0)-a);
   db.ref("withdraws/"+id+"/status").set("done");
 }
 </script>
