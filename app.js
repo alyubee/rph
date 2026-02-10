@@ -1,3 +1,4 @@
+// GANTI CONFIG FIREBASE
 const firebaseConfig = {
   apiKey: "ISI",
   authDomain: "ISI",
@@ -7,46 +8,53 @@ const firebaseConfig = {
 };
 
 firebase.initializeApp(firebaseConfig);
-const auth=firebase.auth();
-const db=firebase.database();
 
-const loginBtn=document.getElementById("loginBtn");
-const userBox=document.getElementById("user");
-const saldoText=document.getElementById("saldo");
-const emailText=document.getElementById("email");
+const auth = firebase.auth();
+const db = firebase.database();
 
-loginBtn.onclick=()=>{
+const loginBtn = document.getElementById("loginBtn");
+const userBox = document.getElementById("user");
+const saldoText = document.getElementById("saldo");
+const emailText = document.getElementById("email");
+
+loginBtn.onclick = () => {
   auth.signInWithPopup(new firebase.auth.GoogleAuthProvider());
 };
 
-auth.onAuthStateChanged(u=>{
+auth.onAuthStateChanged(u => {
   if(u){
     loginBtn.style.display="none";
     userBox.classList.remove("hidden");
     emailText.innerText=u.email;
 
-    db.ref("users/"+u.uid).on("value",s=>{
-      saldoText.innerText=s.val()?.saldo||0;
+    db.ref("users/"+u.uid).on("value", s=>{
+      saldoText.innerText = s.val()?.saldo || 0;
     });
   }
 });
 
 function addSaldo(){
-  const u=auth.currentUser;
+  const u = auth.currentUser;
+  if(!u) return;
   db.ref("users/"+u.uid+"/saldo")
-    .transaction(v=>(v||0)+1000);
+    .transaction(v => (v||0)+1000);
 }
 
 function withdraw(){
-  const u=auth.currentUser;
-  const amt=prompt("Jumlah WD:");
-  if(!amt)return;
+  const u = auth.currentUser;
+  const amt = prompt("Jumlah WD:");
+  if(!amt) return;
+
   db.ref("withdraws").push({
-    uid:u.uid,email:u.email,
-    amount:+amt,status:"pending",
+    uid:u.uid,
+    email:u.email,
+    amount:+amt,
+    status:"pending",
     time:Date.now()
   });
-  alert("WD dikirim");
+  alert("WD terkirim");
 }
 
-function logout(){auth.signOut()}
+function logout(){
+  auth.signOut();
+}
